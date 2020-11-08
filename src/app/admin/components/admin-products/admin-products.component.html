@@ -1,0 +1,161 @@
+<style>
+.iconColor{
+  font-size: 20px;
+  color:red;
+}
+.iconSize{
+  font-size: 20px;
+}
+.example-form {
+min-width: 150px;
+max-width: 500px;
+width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+table {
+  width: 100%;
+}
+  </style>
+  <div class="row">
+      <div class="col-md-12">
+       <!-- <alert type="success text-body" >
+          <strong>Category </strong> has been added successfully.
+        </alert>
+        <alert type="success text-body">
+          <strong>Category </strong> has been deleted successfully.
+        </alert>-->
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title float-left">Manage Product</h4>
+             <button class="btn btn-success float-right" (click)="lgModal.show();resetArr();">Add Product</button>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Discription</th>
+                <th>Image</th>
+                <th>Action</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of productListing | paginate: { itemsPerPage: 5, currentPage: p } ;let element=index">
+                   <td>{{item.id}}</td>
+                   <td>{{item.productname}}</td>
+                   <td>{{item.product_category}}</td>
+                   <td>{{item.product_price | currency:'INR':'symbol'}}</td>
+                   <td>{{item.product_discription}}</td>
+                   <td><img src="{{item.product_image}}" width="60" height="60"></td>
+                   <td>
+                      <a href="javascript:void(0);" (click)="updateProductListing(item.id);lgModal.show();" title="Update Product"><i class="fa fa-pencil-square-o iconSize"></i></a>
+                     &nbsp;
+                      <a href="javascript:void(0);" (click)="deleteProduct(item.id)" title="Remove"><i class="fa fa-trash iconSize"></i></a>
+                       &nbsp;
+                      <a href="javascript:void(0);" (click)="changeProductStatus(item.id,item.status)" title="Change Status"><i [ngClass]="item.status == 1 ? 'fa fa-check-square iconSize': 'fa fa-window-close iconColor'"></i></a>
+                  </td>
+                </tr>  
+              </tbody>
+            </table>
+          </div>
+          <div class="text-right" style="margin-top: 20px;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+          </div>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  
+    <!--Large modal-->
+
+  <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+   
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left" *ngIf="!productArr.productId">Add Product</h4>
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left" *ngIf="productArr.productId">Update Product</h4>
+        <button type="button" class="close pull-right"   aria-label="Close">
+          <span aria-hidden="true" (click)="lgModal.hide();getProductListing()">&times;</span>
+        </button>
+      </div>
+      <div class="text-success text-center" id="success_msg" *ngIf="success_msg">
+        <h4 [innerHTML]="productAddedMsg"></h4>
+      </div>
+      <div class="text-success text-center" id="product_update_msg" *ngIf="product_update_msg">
+        <h4 [innerHTML]="productUpdatedMsg"></h4>
+      </div>
+  
+    
+<div class="modal-body">
+
+  <div class="row">
+     <div class="col-sm-2"></div>
+     <div class="col-sm-8">
+      <form class="example-form" (ngSubmit) ="addProductList()" #myProductForm="ngForm">
+        <mat-form-field class="example-full-width">
+          <mat-label>Product name</mat-label>
+          <input matInput placeholder="name" [(ngModel)]="productArr.productname" name="productname" required>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Price</mat-label>
+     <input type="number"  step="10000" matInput placeholder="Ex. 100" name="product_price" [(ngModel)]="productArr.product_price" required>
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="example-full-width">
+          <mat-label>Product Category</mat-label>
+    
+          <select matNativeControl  name="product_category" [(ngModel)]="productArr.product_category" required>
+            <option *ngFor = "let cateItem of categoryArr" [ngValue]="cateItem.id">{{cateItem.category}}</option>
+           
+          </select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Discription</mat-label>
+          <textarea matInput name="product_discription" [(ngModel)]="productArr.product_discription" required></textarea>
+        </mat-form-field>
+
+<div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" multiple ="false" (change)="onSelect($event)">
+	<ngx-dropzone-label>
+		<div>
+			<h2>Upload product image</h2>
+		</div>
+	</ngx-dropzone-label>
+	<ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"  *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+		<!--<ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>-->
+	</ngx-dropzone-image-preview>
+</div><div [innerHTML]="imageErrorStr" *ngIf="image_error"></div>
+
+<div class="row" style="margin-top:20px;"  *ngIf="productArr.productId">
+  <div class="col-sm-6" class="text-right"><b>Uploaded Image : </b></div>
+  <div class="col-sm-6"> 
+    <img [src]="productArr.uploadedImage" alt="product image" width="60" height="60">
+  </div>
+   
+</div>
+
+  <div>
+     <button type="submit"  *ngIf="!productArr.productId" [disabled]="!myProductForm.valid" class="btn btn-primary float-right" style="margin-bottom: 10px;">Add Product</button>
+     <button type="submit"  *ngIf="productArr.productId" [disabled]="!myProductForm.valid" class="btn btn-primary float-right" style="margin-bottom: 10px;">Update Product</button>
+
+   </div>
+</form>
+     
+</div>
+     <div class="col-sm-2"></div>
+  </div>
+        
+</div>
+</div>
+</div>
+</div>
+
+

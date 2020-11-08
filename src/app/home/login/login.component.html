@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col">
+        <div class="p-3 bg-dark text-white">
+          <h3>Store Manager</h3>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row mt-5 mb-5">
+   <div class="col-md-5 mx-auto">
+       <div class="card-header bg-danger text-white">
+          <h4>Login Form</h4>
+       </div>
+       <div class="card card-body">
+        <div class="alert alert-dismissible alert-primary"  *ngIf="loginDetails == true">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <a href="#" class="alert-link">The username or password is incorrect.</a>
+          </div>
+           <form (submit)="userLogin($event)">
+               <div class="form-group">
+                   <label for="usernameId"> Enter Username:</label>
+                   <input type="text" name="username" id="usernameId" class="form-control">
+               </div>
+               <div class="form-group">
+                <label for="passwordId"> Enter Password:</label>
+                <input type="password"  name="password" id="passwordId" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-danger">Log In</button>
+           </form>
+
+       </div>
+   </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col">
+        <small>&copy; Paras Purwar</small>        
+    </div>
+</div>

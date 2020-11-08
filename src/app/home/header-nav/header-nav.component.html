@@ -1,0 +1,95 @@
+  
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top text-white">
+    <div class="container">
+      <a class="navbar-brand text-white">Technology Store</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" (click)="homeUrl()">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li> 
+         <!-- <li class="nav-item">
+            <a class="nav-link" [routerLink]="'/about'" routerLinkActive="active">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">Services</a>
+          </li>-->
+          <li class="nav-item">
+            <a class="nav-link"  (click)="openModal(template);config.ignoreBackdropClick = !config.ignoreBackdropClick">Login</a>
+          </li>
+          </ul>
+      </div>
+    </div>
+  </nav>
+
+  
+  <ng-template #template>
+    <div class="modal-header bg-danger text-white" >
+      <h4 class="modal-title pull-left">Login</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true" class="text-white">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" style="background-color: #fff;">
+      <div>
+        <tabset [justified]="true">
+          <tab heading="Log In"> 
+              <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                  <form class="pt-lg-3" autocomplete="off">
+                  <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input type="email" class="form-control" placeholder="Enter email" id="email" autocomplete="off">
+                  </div>
+                  <div class="form-group">
+                    <label for="pwd">Password:</label>
+                    <input type="password" class="form-control" placeholder="Enter password" id="pwd" autocomplete="off">
+                  </div>
+                  <button type="submit" class="btn btn-primary float-right" style="margin-bottom: 10px;">Log In</button>
+                </form>
+                </div>
+                <div class="col-sm-3"></div>
+              </div>
+          </tab>
+          <tab heading="Sign In">
+            <div class="row">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-6">
+                <form (ngSubmit) ="signIn(mySignUpForm)" #mySignUpForm="ngForm" class="pt-lg-3" autocomplete="off">
+                  <div class="form-group">
+                    <label for="fistnameId">First Name:<span class="text-danger">*</span></label>
+                    <input type="text" ngModel name="firstname"  class="form-control" placeholder="First name" id="fistnameId" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="lastnameId">Last Name:<span class="text-danger">*</span></label>
+                    <input type="text" ngModel name="lastname"  class="form-control" placeholder="Last name" id="lastnameId" required>
+                  </div>
+                <div class="form-group">
+                  <label for="emailid">Email address:<span class="text-danger">*</span></label>
+                  <input type="email" ngModel name="email"  class="form-control" placeholder="Email" id="emailid" required email>
+                </div>
+                <div class="form-group">
+                  <label for="passwordId">Password:<span class="text-danger">*</span></label>
+                  <input type="password" ngModel name="password"  class="form-control" placeholder="Password" id="passwordId" required minlength="6">
+                </div>
+                <div class="form-group">
+                  <label for="contactId">Contact No.<span class="text-danger">*</span></label>
+                  <input type="number" ngModel name="contact"  class="form-control" placeholder="Contact no." id="contactId" required maxlength="10">
+                </div>
+                <button type="submit" [disabled]="!mySignUpForm.valid" class="btn btn-primary float-right" style="margin-bottom: 10px;">Sign In</button>
+              </form>
+              </div>
+              <div class="col-sm-3"></div>
+            </div>
+
+          </tab>
+        </tabset>
+        
+      </div>
+    </div>
+  </ng-template>

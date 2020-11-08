@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Shop Homepage</title>
+  <link href="/assets/homeAssets/css/shop-homepage.css" rel="stylesheet">
+  <style>
+    input.ng-invalid.ng-touched {
+      border: 1px solid red;
+      box-shadow: 0 0 13px inset #de0b0b40;
+    }  
+
+    
+  </style>
+</head>
+<body>
+   
+<app-header-nav></app-header-nav>
+   
+   <div class="container">
+    <div class="row">
+     <app-home-category></app-home-category>
+      <div class="col-lg-9">
+        <div class="card mt-4">
+          <img class="card-img-top img-fluid" [src]="itemDetails.product_image" alt="" width="350" height="900">
+          <div class="card-body">
+            <h3 class="card-title">{{itemDetails.productname}}</h3>
+            <h4>{{itemDetails.product_price | currency:'INR':'symbol'}}</h4>
+            <p class="card-text">{{itemDetails.product_discription}}</p>
+            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+            4.0 stars
+          </div>
+        </div>
+        <!-- /.card -->
+
+        <div class="card card-outline-secondary my-4">
+          <div class="card-header">
+            Product Reviews
+          </div>
+          <div class="card-body" >
+            <div *ngFor="let commentArrShow of commentArr">
+              <hr>
+              <p>{{commentArrShow.review_comment}}</p>
+              <small class="text-muted">Posted by Anonymous on {{commentArrShow.addedon}}</small>
+             </div>
+          </div>
+           <div class="card-body">
+             <mat-form-field class="example-full-width" style="width:60%;">
+                 <mat-label>Comment : </mat-label>
+                  <textarea matInput name="reviewcomment" [(ngModel)]="reviewcomment" placeholder="Write a review" required></textarea>
+             </mat-form-field>
+               <a href="JavaScript:void(0)" class="btn btn-success" (click)="writeReview(reviewcomment,itemDetails.id)" style="margin-left: 10%;">Leave a Review</a>
+           </div>
+
+        </div>
+        <!-- /.card -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+
+  </div>
+ 
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+ <!--<script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
+  
+ 
+</body>
+
+</html>
+

@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  api_url:'http://127.0.0.1:8000/api/',
+  angular_base_url:'http://localhost:4200/'
 };

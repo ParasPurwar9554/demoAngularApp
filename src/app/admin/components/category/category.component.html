@@ -1,0 +1,71 @@
+<style>
+  .iconColor{
+    font-size: 20px;
+    color:red;
+  }
+  .iconSize{
+    font-size: 20px;
+  }
+</style>
+<div class="row">
+    <div class="col-md-12">
+      <alert type="success text-body" *ngIf="category_success == true">
+        <strong>Category </strong> has been added successfully.
+      </alert>
+      <alert type="success text-body" *ngIf="category_deleted == true">
+        <strong>Category </strong> has been deleted successfully.
+      </alert>
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title float-left">Category</h4>
+             <button type="button" (click)="openModalCategory(templateCate)" class="btn btn-success float-right">Add Category</button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th> Id</th>
+                <th> Category Name </th>
+                <th> Date </th>
+                <th class="text-center">Status</th>
+                <th class="text-right">Action</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let categoryList of categorr_arr">
+                  <td> {{categoryList.id}} </td>
+                  <td> {{categoryList.category}} </td>
+                  <td> {{categoryList.addedon}}</td>
+                  <td class="text-center">  <i [ngClass]="categoryList.status == 1 ? 'fa fa-check-square iconSize': 'fa fa-window-close iconColor'"></i></td>
+                  <td class="text-right">
+                  <a href="javascript:void(0);" (click)="categoryStatus(categoryList.id,categoryList.status)" title="Edit status"><i [ngClass]="categoryList.status == 1 ? 'fa fa-check-square iconSize': 'fa fa-window-close iconSize'"></i></a>
+                  &nbsp;
+                  <a href="javascript:void(0);" (click)="deleteCategory(categoryList.id)" title="Remove"><i class="fa fa-trash iconSize"></i></a>
+                  </td>
+                </tr>  
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+
+  <ng-template #templateCate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Add Category</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form class="pt-lg-3" autocomplete="off">
+        <div class="form-group">
+      <input type="text" [(ngModel)]="category.catname" name="category" class="form-control" placeholder="Enter category" id="category" autocomplete="off">
+      <span class="text-danger" *ngIf="category_error== true">Enter category name</span>
+        </div>
+    <button type="submit" (click)="addCategory(category)" class="btn btn-primary float-right" style="margin-bottom: 10px;">Add Category</button>
+    </form>     
+    </div>
+  </ng-template>
+  
